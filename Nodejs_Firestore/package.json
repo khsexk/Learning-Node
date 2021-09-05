@@ -1,0 +1,19 @@
+{
+  "name": "nodejs_firestore",
+  "version": "1.0.0",
+  "description": "Node.js and Firestore Test",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "author": "khsexk",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "firebase": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
