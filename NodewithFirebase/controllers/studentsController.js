@@ -4,7 +4,12 @@
 const Student = require('../models/student');
 const config = require('../config');
 const admin = require('firebase-admin');
-admin.initializeApp(config.firebaseConfig);
+// admin.initializeApp(config.firebaseConfig);
+var serviceAccount = require("../path/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 const db = admin.firestore();
 
@@ -15,6 +20,7 @@ const addStudent = async (req, res, next) => {
         res.send('Record saved successfuly');
     } catch(error) {
         res.status(400).send(error.message);
+        console.log("Failed with error: " + error)
     }
 }
 
