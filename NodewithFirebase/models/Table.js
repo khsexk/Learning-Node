@@ -1,4 +1,4 @@
-class Student {
+class Table {
     constructor(id, firstName, lastName, fatherName, classEnrolled, age, phoneNumber, subject, year, semester, status ) {
             this.id = id;
             this.firstName = firstName;
@@ -14,4 +14,4 @@ class Student {
     }
 }
 
-module.exports = Student;
+module.exports = Table;

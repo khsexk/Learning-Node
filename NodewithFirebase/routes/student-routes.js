@@ -1,19 +1,19 @@
 const express = require('express');
-const {addStudent, 
-       getAllStudents, 
-       getStudent,
-       updateStudent,
-       deleteStudent
-      } = require('../controllers/studentsController');
+const {
+    addTable, 
+    getAllTableInfo, 
+    getTable,
+    updateTable,
+    deleteTable
+    } = require('../controllers/studentsController');
 
 const router = express.Router();
 
-router.post('/student', addStudent);
-router.get('/students', getAllStudents);
-router.get('/student/:id', getStudent);
-router.put('/student/:id', updateStudent);
-router.delete('/student/:id', deleteStudent);
-
+router.post('/table', addTable);
+router.get('/Table_Use_Information', getAllTableInfo);
+router.get('/table/:id', getTable);
+router.put('/table/:id', updateTable);
+router.delete('/table/:id', deleteTable);
 
 module.exports = {
     routes: router

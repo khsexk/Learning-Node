@@ -1,7 +1,7 @@
 'use strict';
 
 
-const Student = require('../models/student');
+const Table = require('../models/Table');
 const admin = require('firebase-admin');
 var serviceAccount = require("../path/serviceAccountKey.json");
 
@@ -11,10 +11,10 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-const addStudent = async (req, res, next) => {
+const addTable = async (req, res, next) => {
     try {
         const data = req.body;
-        await db.collection('Table_Use_Information').doc('Table_1').set(data);
+        await db.collection('Table_Use_Information').doc('Table_3').set(data);
         res.send('Record saved successfuly');
         console.log('Record saved successfuly');
     } catch(error) {
@@ -23,16 +23,16 @@ const addStudent = async (req, res, next) => {
     }
 }
 
-const getAllStudents = async (req, res, next) => {
+const getAllTableInfo = async (req, res, next) => {
     try {
-        const students = await db.collection('students');
-        const data = await students.get();
-        const studentsArray = [];
+        const tableInfo = await db.collection('Table_Use_Information');
+        const data = await tableInfo.get();
+        const tableInfoArray = [];
         if(data.empty) {
-            res.status(404).send('No student record found');
+            res.status(404).send('No Table record found');
         }else {
             data.forEach(doc => {
-                const student = new Student(
+                const table = new Table(
                     doc.id,
                     doc.data().firstName,
                     doc.data().lastName,
@@ -45,22 +45,22 @@ const getAllStudents = async (req, res, next) => {
                     doc.data().semester,
                     doc.data().status
                 );
-                studentsArray.push(student);
+                tableInfoArray.push(table);
             });
-            res.send(studentsArray);
+            res.send(tableInfoArray);
         }
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
 
-const getStudent = async (req, res, next) => {
+const getTable = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const student = await db.collection('students').doc(id);
-        const data = await student.get();
+        const table = await db.collection('Table_Use_Information').doc(id);
+        const data = await table.get();
         if(!data.exists) {
-            res.status(404).send('Student with the given ID not found');
+            res.status(404).send('Table with the given ID not found');
         }else {
             res.send(data.data());
         }
@@ -69,22 +69,22 @@ const getStudent = async (req, res, next) => {
     }
 }
 
-const updateStudent = async (req, res, next) => {
+const updateTable = async (req, res, next) => {
     try {
         const id = req.params.id;
         const data = req.body;
-        const student =  await db.collection('students').doc(id);
-        await student.update(data);
-        res.send('Student record updated successfuly');        
+        const table =  await db.collection('Table_Use_Information').doc(id);
+        await table.update(data);
+        res.send('Table record updated successfuly');        
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
 
-const deleteStudent = async (req, res, next) => {
+const deleteTable = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await db.collection('students').doc(id).delete();
+        await db.collection('Table_Use_Information').doc(id).delete();
         res.send('Record deleted successfuly');
     } catch (error) {
         res.status(400).send(error.message);
@@ -92,9 +92,9 @@ const deleteStudent = async (req, res, next) => {
 }
 
 module.exports = {
-    addStudent,
-    getAllStudents,
-    getStudent,
-    updateStudent,
-    deleteStudent
+    addTable,
+    getAllTableInfo,
+    getTable,
+    updateTable,
+    deleteTable
 }
