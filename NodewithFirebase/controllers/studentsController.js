@@ -2,9 +2,7 @@
 
 
 const Student = require('../models/student');
-const config = require('../config');
 const admin = require('firebase-admin');
-// admin.initializeApp(config.firebaseConfig);
 var serviceAccount = require("../path/serviceAccountKey.json");
 
 admin.initializeApp({
@@ -16,17 +14,18 @@ const db = admin.firestore();
 const addStudent = async (req, res, next) => {
     try {
         const data = req.body;
-        await db.collection('students').doc().set(data);
+        await db.collection('Table_Use_Information').doc('Table_1').set(data);
         res.send('Record saved successfuly');
+        console.log('Record saved successfuly');
     } catch(error) {
         res.status(400).send(error.message);
-        console.log("Failed with error: " + error)
+        console.log("Failed with error: " + error);
     }
 }
 
 const getAllStudents = async (req, res, next) => {
     try {
-        const students = await firestore.collection('students');
+        const students = await db.collection('students');
         const data = await students.get();
         const studentsArray = [];
         if(data.empty) {
@@ -58,7 +57,7 @@ const getAllStudents = async (req, res, next) => {
 const getStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const student = await firestore.collection('students').doc(id);
+        const student = await db.collection('students').doc(id);
         const data = await student.get();
         if(!data.exists) {
             res.status(404).send('Student with the given ID not found');
@@ -74,7 +73,7 @@ const updateStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
         const data = req.body;
-        const student =  await firestore.collection('students').doc(id);
+        const student =  await db.collection('students').doc(id);
         await student.update(data);
         res.send('Student record updated successfuly');        
     } catch (error) {
@@ -85,7 +84,7 @@ const updateStudent = async (req, res, next) => {
 const deleteStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await firestore.collection('students').doc(id).delete();
+        await db.collection('students').doc(id).delete();
         res.send('Record deleted successfuly');
     } catch (error) {
         res.status(400).send(error.message);
